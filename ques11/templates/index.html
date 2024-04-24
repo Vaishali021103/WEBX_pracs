@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Validation</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+</head>
+<body>
+    <h2>User Validation</h2>
+    <form action="/validation" id='validation-form' method="post">
+        <label for="password">Password:</label>
+        <input type="text" id='password' name='password'>
+        <button type='submit'>Submit</button>
+    </form>
+    <div id="validation-result"></div>
+
+    <script>
+        $('document').ready(function(){
+            $('#validation-form').submit(function(event){
+                event.preventDefault()
+                var password = $('#password').val()
+
+                $.post('/validation', {"password" : password}, function(response){
+                    if(response.isValid){
+                        $('#validation-result').html('<p>Valid</p>');
+                    }else{
+                        $('#validation-result').html('<p>no valid</p>');
+                    }
+                })
+            })
+        })
+    </script>
+    
+</body>
+</html>
